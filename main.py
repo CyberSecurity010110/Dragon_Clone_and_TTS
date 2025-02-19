@@ -1,5 +1,8 @@
 from audio_processing.load_audio import load_audio
 from audio_processing.preprocess_audio import preprocess_audio
+from models.ollama_model import OllamaModel
+from output_handling.generate_speech import generate_speech
+from output_handling.handle_output import handle_output
 
 def main():
     # Path to the voice sample
@@ -12,8 +15,18 @@ def main():
     target_framerate = 22050  # Example target framerate
     processed_audio = preprocess_audio(audio_array, target_framerate)
     
-    # Placeholder for further processing (e.g., model inference)
-    # ...
+    # Initialize and load the model
+    model = OllamaModel()
+    model.load_model()
+    
+    # Example text input
+    text_input = "Hello, this is a test of the TTS system."
+    
+    # Generate speech
+    speech_output = generate_speech(model, text_input)
+    
+    # Handle the output
+    handle_output(speech_output)
 
 if __name__ == '__main__':
     main()
