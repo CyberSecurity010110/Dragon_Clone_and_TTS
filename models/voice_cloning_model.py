@@ -4,9 +4,12 @@ from torchaudio.transforms import Resample
 
 class VoiceCloningModel:
     def __init__(self):
+        # Check if CUDA is available
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        
         # Load Tacotron2 and WaveGlow models
-        self.tacotron2 = torch.hub.load('nvidia/DeepLearningExamples:torchhub', 'nvidia_tacotron2')
-        self.waveglow = torch.hub.load('nvidia/DeepLearningExamples:torchhub', 'nvidia_waveglow')
+        self.tacotron2 = torch.hub.load('nvidia/DeepLearningExamples:torchhub', 'nvidia_tacotron2').to(self.device)
+        self.waveglow = torch.hub.load('nvidia/DeepLearningExamples:torchhub', 'nvidia_waveglow').to(self.device)
         self.tacotron2.eval()
         self.waveglow.eval()
 
@@ -28,5 +31,5 @@ class VoiceCloningModel:
             audio = self.waveglow.infer(mel_spectrogram)
         
         # Save the generated audio
-        torchaudio.save('cloned_voice.wav', audio, 22050)
+        torchaudio.save('cloned_voice.wav', audio.cpu(), 22050)
         return 'cloned_voice.wav'
