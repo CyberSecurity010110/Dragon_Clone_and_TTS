@@ -7,11 +7,13 @@ class VoiceCloningModel:
         # Check if CUDA is available
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         
-        # Load Tacotron2 and WaveGlow models
-        self.tacotron2 = torch.hub.load('nvidia/DeepLearningExamples:torchhub', 'nvidia_tacotron2').to(self.device)
-        self.waveglow = torch.hub.load('nvidia/DeepLearningExamples:torchhub', 'nvidia_waveglow').to(self.device)
-        self.tacotron2.eval()
-        self.waveglow.eval()
+        # Load Tacotron2 and WaveGlow models with appropriate device mapping
+        self.tacotron2 = torch.hub.load('nvidia/DeepLearningExamples:torchhub', 'nvidia_tacotron2', map_location=self.device)
+        self.waveglow = torch.hub.load('nvidia/DeepLearningExamples:torchhub', 'nvidia_waveglow', map_location=self.device)
+        
+        # Move models to the appropriate device
+        self.tacotron2.to(self.device).eval()
+        self.waveglow.to(self.device).eval()
 
     def preprocess_audio(self, audio_path):
         waveform, sample_rate = torchaudio.load(audio_path)
