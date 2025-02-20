@@ -1,18 +1,19 @@
 import numpy as np
 import torch
-from some_pretrained_model import PretrainedVoiceCloningModel  # Placeholder for the actual model
+from transformers import Tacotron2ForConditionalGeneration, Tacotron2Processor
 
 class VoiceCloningModel:
     def __init__(self):
-        self.model = PretrainedVoiceCloningModel()
+        self.processor = Tacotron2Processor.from_pretrained("facebook/tacotron2")
+        self.model = Tacotron2ForConditionalGeneration.from_pretrained("facebook/tacotron2")
 
     def train(self, audio_samples, labels):
-        # Train the model with the provided audio samples and labels
-        # This step can be skipped if using a pre-trained model
+        # Training is not required for pre-trained models
         pass
 
     def clone_voice(self, audio_sample):
         # Generate a cloned voice from the provided audio sample
-        audio_tensor = torch.tensor(audio_sample).unsqueeze(0)  # Convert to tensor and add batch dimension
-        cloned_voice = self.model(audio_tensor)
-        return cloned_voice.squeeze(0).numpy()  # Remove batch dimension and convert to numpy array
+        inputs = self.processor(audio_sample, return_tensors="pt")
+        with torch.no_grad():
+            cloned_voice = self.model.generate(inputs["input_ids"])
+        return cloned_voice.squeeze(0).numpy()  # Convert to numpy array
