@@ -1,16 +1,18 @@
-from models.model_interface import TTSModelInterface
-
-class OllamaModel(TTSModelInterface):
+class OllamaModel:
     def __init__(self):
-        self.model = None
-
-    def load_model(self):
-        # Load the Ollama model here
-        # Example: self.model = load_ollama_model()
+        # Initialize the model
         pass
 
-    def generate_speech(self, text: str) -> str:
-        # Generate speech using the Ollama model
-        # Example: speech_output = self.model.generate(text)
-        speech_output = "Generated speech for: " + text
+    def load_model(self):
+        # Load the model
+        pass
+
+    def generate_speech(self, text_input, cloned_voice=None):
+        if cloned_voice is not None:
+            # Generate speech using the cloned voice
+            speech_output = f"Generated speech with cloned voice: {text_input}"
+        else:
+            # Generate speech using the default voice
+            speech_output = f"Generated speech: {text_input}"
+        
         return speech_output
