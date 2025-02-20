@@ -3,4 +3,4 @@ scipy
 pyttsx3
 torch
 transformers
-torch-audio
+torchaudio
