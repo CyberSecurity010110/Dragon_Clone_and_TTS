@@ -22,18 +22,18 @@ def main():
     voice_cloning_model = VoiceCloningModel()
     voice_cloning_model.train([processed_audio], ['label'])  # Placeholder for actual training data
     
+    # Get text input from the user
+    text_input = get_text_input()
+    
     # Clone the voice
-    cloned_voice = voice_cloning_model.clone_voice(processed_audio)
+    cloned_voice_path = voice_cloning_model.clone_voice(text_input)
     
     # Initialize and load the TTS model
     model = OllamaModel()
     model.load_model()
     
-    # Get text input from the user
-    text_input = get_text_input()
-    
     # Generate speech using the cloned voice
-    speech_output = generate_speech(model, text_input, cloned_voice)
+    speech_output = generate_speech(model, text_input, cloned_voice_path)
     
     # Handle the output
     handle_output(speech_output)
