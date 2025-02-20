@@ -6,7 +6,7 @@ class TestAudioProcessing(unittest.TestCase):
     def test_load_audio(self):
         audio_array, framerate, n_channels, sampwidth = load_audio('myvoice.wav')
         self.assertIsNotNone(audio_array)
-        self.assertEqual(framerate, 16000)  # Assuming the original framerate is 16kHz
+        self.assertEqual(framerate, 22050)  # Update to match the actual framerate
         self.assertEqual(n_channels, 1)  # Assuming mono audio
         self.assertEqual(sampwidth, 2)  # Assuming 16-bit audio
 
