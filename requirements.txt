@@ -4,3 +4,4 @@ pyttsx3
 torch
 transformers
 torchaudio
+TTS
