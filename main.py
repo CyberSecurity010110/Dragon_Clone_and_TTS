@@ -18,15 +18,14 @@ def main():
     target_framerate = 22050  # Example target framerate
     processed_audio = preprocess_audio(audio_array, target_framerate)
     
-    # Initialize and train the voice cloning model
+    # Initialize the voice cloning model
     voice_cloning_model = VoiceCloningModel()
-    voice_cloning_model.train([processed_audio], ['label'])  # Placeholder for actual training data
     
     # Get text input from the user
     text_input = get_text_input()
     
     # Clone the voice
-    cloned_voice_path = voice_cloning_model.clone_voice(text_input)
+    cloned_voice_path = voice_cloning_model.clone_voice(text_input, voice_sample_path)
     
     # Initialize and load the TTS model
     model = OllamaModel()
@@ -40,6 +39,3 @@ def main():
     
     # Read the screen text using the screen reader
     read_screen_text(speech_output)
-
-if __name__ == '__main__':
-    main()
