@@ -4,3 +4,4 @@ pyttsx3
 torch
 transformers
 torchaudio
+--extra-index-url https://pypi.ngc.nvidia.com
